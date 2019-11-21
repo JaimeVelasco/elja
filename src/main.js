@@ -4,9 +4,6 @@ import router from './router'
 import './registerServiceWorker'
 import VueGAPI from 'vue-gapi'
 
-console.log('..', process.env.VUE_APP_API_KEY)
-console.log('..', process.env.VUE_APP_CLIENT_ID)
-
 const apiConfig = {
   apiKey: process.env.VUE_APP_API_KEY,
   clientId: process.env.VUE_APP_CLIENT_ID,
