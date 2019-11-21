@@ -5,7 +5,7 @@
     <button id="signout_button" style="display: none;">Sign Out</button>
     <pre id="content" style="white-space: pre-wrap;"></pre>
     <div v-if="isSignedIn">
-      <li v-for="(cliente, index) in clientes" v-bind:key=index>
+      <li v-for="(cliente, index) in massagedClients" v-bind:key=index>
         {{ cliente[0] }}
         {{ cliente[1] }}
         {{ cliente[2] }}
@@ -38,11 +38,14 @@ export default {
   computed: {
     isSignedIn () {
       return this.$isSignedIn()
+    },
+    massagedClients () {
+      console.log('this.clientes', this.clientes)
+      return this.clientes
     }
   },
   methods: {
     login () {
-      let vm = this
       if (this.$isAuthenticated() !== true) {
         this.$login()
       }
@@ -54,7 +57,9 @@ export default {
             majorDimension: 'ROWS'
           }).then((response) => {
             const result = response.result
-            vm.clientes = result.values
+            this.clientes = result.values.map(person => {
+              return { ...person }
+            })
           })
         })
     }
