@@ -2,5 +2,10 @@
   "env": {
     "VUE_APP_CLIENT_ID": "@client-id",
     "VUE_APP_API_KEY": "@api-key"
+  },
+  "build": {
+    "env": {
+      "VUE_APP_CLIENT_ID": "@client-id",
+      "VUE_APP_API_KEY": "@api-key"
   }
 }
