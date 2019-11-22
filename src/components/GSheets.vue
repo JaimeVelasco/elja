@@ -40,7 +40,6 @@ export default {
       return this.$isSignedIn()
     },
     massagedClients () {
-      console.log('this.clientes', this.clientes)
       return this.clientes
     }
   },
