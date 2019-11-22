@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import './registerServiceWorker'
 import VueGAPI from 'vue-gapi'
+import vuetify from './plugins/vuetify'
 
 const apiConfig = {
   apiKey: process.env.VUE_APP_API_KEY,
@@ -18,5 +19,6 @@ Vue.use(VueGAPI, apiConfig)
 
 new Vue({
   router,
+  vuetify,
   render: h => h(App)
 }).$mount('#app')

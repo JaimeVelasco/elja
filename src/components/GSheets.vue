@@ -1,19 +1,34 @@
 <template>
   <div>
-    <p>Google Sheets API Quickstart</p>
-    <button id="authorize_button" style="display: none;">Authorize</button>
-    <button id="signout_button" style="display: none;">Sign Out</button>
-    <pre id="content" style="white-space: pre-wrap;"></pre>
     <div v-if="isSignedIn">
-      <li v-for="(cliente, index) in massagedClients" v-bind:key=index>
+      <!-- <li v-for="(cliente, index) in massagedClients" v-bind:key=index>
         {{ cliente[0] }}
         {{ cliente[1] }}
         {{ cliente[2] }}
         {{ cliente[3] }}
         {{ cliente[4] }}
-      </li>
+      </li> -->
+      <v-card>
+        <v-card-title>
+          Nutrition
+          <v-spacer></v-spacer>
+          <v-text-field
+            v-model="search"
+            append-icon="search"
+            label="Search"
+            single-line
+            hide-details
+          ></v-text-field>
+        </v-card-title>
+        <v-data-table
+          :headers="headers"
+          :items="clientes"
+          :search="search"
+          :loading="loading"
+          loading-text="Cargando info... aguanta un pooquito."
+        ></v-data-table>
+      </v-card>
     </div>
-
     <h1 v-else>Oh no 😢, no estas autorizadx.</h1>
   </div>
 </template>
@@ -29,7 +44,26 @@ export default {
   },
   data () {
     return {
-      clientes: []
+      clientes: [],
+      search: '',
+      headers: [
+        // {
+        //   text: 'Num. Cliente',
+        //   align: 'left',
+        //   sortable: false,
+        //   value: '0'
+        // },
+        // { text: 'Evento', value: '1' },
+        { text: 'Familia', value: '2' },
+        { text: 'Nombre Esposo', value: '3' },
+        { text: 'Apellidos Esposo', value: '4' },
+        { text: 'Nombre Esposa', value: '5' },
+        { text: 'Apellidos Esposa', value: '6' }
+        // { text: 'Nombre Esposo', value: '7' },
+        // { text: 'Apellidos Esposo', value: '8' },
+        // { text: 'Iron (%)', value: '9' }
+      ],
+      loading: true
     }
   },
   created () {
@@ -38,9 +72,6 @@ export default {
   computed: {
     isSignedIn () {
       return this.$isSignedIn()
-    },
-    massagedClients () {
-      return this.clientes
     }
   },
   methods: {
@@ -59,6 +90,7 @@ export default {
             this.clientes = result.values.map(person => {
               return { ...person }
             })
+            this.loading = false
           })
         })
     }
