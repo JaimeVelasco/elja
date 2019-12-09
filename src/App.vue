@@ -5,12 +5,12 @@
       color="primary"
       dark
     >
-      <div class="d-flex align-center display-2">
+      <div class="d-flex align-center display-1">
         Elja
       </div>
       <v-spacer></v-spacer>
-      <v-btn to="/" text >Home</v-btn>
-      <v-btn to="/about" text >About</v-btn>
+      <v-btn to="/" text >Calendario</v-btn>
+      <v-btn to="/lista" text >Lista</v-btn>
     </v-app-bar>
 
     <v-content>
@@ -22,13 +22,6 @@
 <script>
 
 export default {
-  name: 'App',
-
-  components: {
-  },
-
-  data: () => ({
-    //
-  })
+  name: 'App'
 }
 </script>
