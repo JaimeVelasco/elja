@@ -26,17 +26,17 @@
 </template>
 
 <script>
-// If the sheet is private, we'll have to authenticate.
-const SPREADSHEET_ID = '1lti3IWGxHMTJLB4hvezerNCeeE5LKfzduqq-X2P_2gg'
-
 export default {
   name: 'GSheets',
   props: {
-    msg: String
+    clientes: { type: Array },
+    loading: {
+      type: Boolean,
+      default: true
+    }
   },
   data () {
     return {
-      clientes: [],
       search: '',
       headers: [
         { text: 'Familia', value: '2' },
@@ -44,8 +44,7 @@ export default {
         { text: 'Apellidos Esposo', value: '4' },
         { text: 'Nombre Esposa', value: '5' },
         { text: 'Apellidos Esposa', value: '6' }
-      ],
-      loading: true
+      ]
     }
   },
   created () {
@@ -68,20 +67,20 @@ export default {
       if (this.$isAuthenticated() !== true) {
         this.$login()
       }
-      this.$getGapiClient()
-        .then(gapi => {
-          gapi.client.sheets.spreadsheets.values.get({
-            spreadsheetId: SPREADSHEET_ID,
-            range: 'JAIME!A3:Z640',
-            majorDimension: 'ROWS'
-          }).then((response) => {
-            const result = response.result
-            this.clientes = result.values.map(person => {
-              return { ...person }
-            })
-            this.loading = false
-          })
-        })
+      // this.$getGapiClient()
+      //   .then(gapi => {
+      //     gapi.client.sheets.spreadsheets.values.get({
+      //       spreadsheetId: SPREADSHEET_ID,
+      //       range: 'JAIME!A3:Z640',
+      //       majorDimension: 'ROWS'
+      //     }).then((response) => {
+      //       const result = response.result
+      //       this.clientes = result.values.map(person => {
+      //         return { ...person }
+      //       })
+      //       this.loading = false
+      //     })
+      //   })
     }
   }
 }

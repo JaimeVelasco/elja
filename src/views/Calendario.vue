@@ -50,7 +50,6 @@
             :events="events"
             :event-color="getEventColor"
             :event-margin-bottom="3"
-            :now="today"
             :type="type"
             @click:event="showEvent"
             @click:more="viewDay"
@@ -110,9 +109,15 @@
 <script>
 export default {
   name: 'calendario',
+  props: {
+    clientes: { type: Array },
+    loading: {
+      type: Boolean,
+      default: true
+    }
+  },
   data: () => ({
-    today: '2019-01-01',
-    focus: '2019-01-01',
+    focus: new Date().toString(),
     type: 'month',
     typeToLabel: {
       month: 'Month',

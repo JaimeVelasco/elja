@@ -1,7 +1,7 @@
 <template>
   <div class="Lista">
     <h1>Lista de Clientes</h1>
-    <GSheets />
+    <GSheets :clientes="clientes" :loading="loading" />
   </div>
 </template>
 
@@ -11,6 +11,13 @@ import GSheets from '@/components/GSheets.vue'
 
 export default {
   name: 'lista',
+  props: {
+    clientes: { type: Array },
+    loading: {
+      type: Boolean,
+      default: true
+    }
+  },
   components: {
     GSheets
   }

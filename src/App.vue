@@ -14,14 +14,46 @@
     </v-app-bar>
 
     <v-content>
-      <router-view/>
+      <router-view :clientes="clientes" :loading="loading" />
     </v-content>
   </v-app>
 </template>
 
 <script>
+// If the sheet is private, we'll have to authenticate.
+const SPREADSHEET_ID = '1lti3IWGxHMTJLB4hvezerNCeeE5LKfzduqq-X2P_2gg'
 
 export default {
-  name: 'App'
+  name: 'App',
+  data () {
+    return {
+      loading: true,
+      clientes: []
+    }
+  },
+  created () {
+    this.login()
+  },
+  methods: {
+    login () {
+      if (this.$isAuthenticated() !== true) {
+        this.$login()
+      }
+      this.$getGapiClient()
+        .then(gapi => {
+          gapi.client.sheets.spreadsheets.values.get({
+            spreadsheetId: SPREADSHEET_ID,
+            range: 'JAIME!A3:Z640',
+            majorDimension: 'ROWS'
+          }).then((response) => {
+            const result = response.result
+            this.clientes = result.values.map(person => {
+              return { ...person }
+            })
+            this.loading = false
+          })
+        })
+    }
+  }
 }
 </script>
